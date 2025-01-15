@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Trends</title>
+    <script>
+        async function runScript() {
+            try {
+                // Call the backend to run the Python script
+                const response = await fetch("/run-script", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const result = await response.json();
+                alert(result.message);
+                if (result.status === "success") {
+                    fetchTrends(); // Fetch trends after running the script
+                }
+            } catch (error) {
+                alert("An error occurred while running the script.");
+            }
+        }
+
+        async function fetchTrends() {
+            try {
+                // Call the backend to get trends data
+                const response = await fetch("/get-trends");
+                const result = await response.json();
+                if (result.status === "success") {
+                    const trendsContainer = document.getElementById("trends-container");
+
+                    // Clear the existing content
+                    trendsContainer.innerHTML = "";
+
+                    // Add the new trends
+                    if (result.data.length > 0) {
+                        const entry = result.data[0]; // Use the latest record only
+                        const date = new Date(entry.timestamp);
+                        const formattedDate = date.toLocaleString();
+
+                        // Create a list of trends
+                        const trendsList = entry.trends.map(trend => `<li>${trend}</li>`).join("");
+
+                        trendsContainer.innerHTML = `
+                            <h3>These are the most happening topics as of ${formattedDate}</h3>
+                            <ul>${trendsList}</ul>
+                            <p><strong>The IP address used for this query was:</strong> ${entry.proxy_used}</p>
+                            <h4>Here’s a JSON extract of this record from MongoDB:</h4>
+                            <pre>${JSON.stringify(entry, null, 2)}</pre>
+                            <button onclick="runScript()">Click here to run the query again.</button>
+                        `;
+                    } else {
+                        trendsContainer.innerHTML = "<p>No data available.</p>";
+                    }
+                } else {
+                    alert("Failed to fetch trends: " + result.message);
+                }
+            } catch (error) {
+                alert("An error occurred while fetching trends.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Twitter Trending Topics</h1>
+    <button onclick="runScript()">Click here to run the script.</button>
+    <div id="trends-container" style="margin-top: 20px;"></div>
+</body>
+</html>
