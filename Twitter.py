@@ -50,7 +50,11 @@ def fetch_trends():
     chrome_options.add_argument("--no-sandbox")
 
     # Initialize WebDriver without proxy
-    driver = webdriver.Chrome(options=chrome_options)
+    try:
+        driver = webdriver.Chrome(options=chrome_options)
+    except Exception as e:
+        print(f"Error initializing WebDriver: {e}")
+        sys.exit(1)
 
     try:
         print("Launching Chrome browser...")
