@@ -1,11 +1,16 @@
 from flask import Flask, render_template, jsonify
 from pymongo import MongoClient
 import subprocess
+from urllib.parse import quote_plus
 
 app = Flask(__name__)
 
+# URL encode your MongoDB username and password
+username = quote_plus("shreyashk289")
+password = quote_plus("Shreyas@2003")
+
 # MongoDB configuration
-MONGO_URI = "mongodb://localhost:27017/"
+MONGO_URI = f"mongodb+srv://{username}:{password}@twitter.rc0mj.mongodb.net/?retryWrites=true&w=majority&appName=Twitter"
 DATABASE_NAME = "twitter_trends"
 COLLECTION_NAME = "trending_topics"
 
