@@ -54,7 +54,7 @@ def fetch_trends():
         driver = webdriver.Chrome()
     except Exception as e:
         print(f"Error initializing WebDriver: {e}")
-        sys.exit(1)
+        sys.exit(10)
 
     try:
         print("Launching Chrome browser...")
