@@ -51,7 +51,7 @@ def fetch_trends():
 
     # Initialize WebDriver without proxy
     try:
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=chrome_options)
     except Exception as e:
         print(f"Error initializing WebDriver: {e}")
         sys.exit(10)
