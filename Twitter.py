@@ -98,7 +98,7 @@ def fetch_trends():
             print("Failed to enter username after multiple attempts.")
             driver.quit()
             print("Browser closed.")
-            sys.exit(1)
+            sys.exit(2)
 
         # Handle the next input dynamically
         # noinspection PyBroadException
@@ -166,7 +166,7 @@ def fetch_trends():
             if show_more_button is None:
                 print("Failed to locate the 'Show More' button after multiple attempts. Exiting...")
                 driver.quit()
-                sys.exit(1)
+                sys.exit(3)
 
             # Navigate to the "Explore" section of Trends
             explore_section = WebDriverWait(driver, 30).until(
@@ -188,7 +188,7 @@ def fetch_trends():
         except Exception as e:
             print(f"Failed to navigate to the explore page or load the 'Timeline: Explore' section. Exception: {e}")
             driver.quit()
-            sys.exit(1)
+            sys.exit(4)
 
         # Now start the retry loop for fetching trends
         while attempt < max_attempts:
@@ -253,7 +253,7 @@ def fetch_trends():
                 print(f"Failed to fetch sufficient trends after {reload_attempts} reload attempts.")
                 driver.quit()
                 print("Browser closed.")
-                sys.exit(1)
+                sys.exit(5)
 
         # Final check after the loop
         if len(top_5_trends) < 5:
@@ -271,7 +271,7 @@ def fetch_trends():
             db = client[DATABASE_NAME]
         except Exception as e:
             print(f"MongoDB connection failed: {e}")
-            sys.exit(1)
+            sys.exit(6)
 
         collection = db[COLLECTION_NAME]
 
@@ -293,7 +293,7 @@ def fetch_trends():
         print(f"An error occurred: {e}")
         driver.quit()
         print("Browser closed.")
-        sys.exit(1)
+        sys.exit(8)
 
 
 fetch_trends()
