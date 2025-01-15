@@ -52,7 +52,6 @@ def run_script():
 
 
 @app.route("/get-trends", methods=["GET"])
-@app.route("/get-trends", methods=["GET"])
 def get_trends():
     try:
         # Fetch all trends from MongoDB sorted by timestamp (latest first)
