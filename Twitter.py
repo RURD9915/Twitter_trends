@@ -45,7 +45,7 @@ def fetch_trends():
 
     # Configure Chrome options
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Run in headless mode (optional)
+    # chrome_options.add_argument("--headless")  # Run in headless mode (optional)
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
 
