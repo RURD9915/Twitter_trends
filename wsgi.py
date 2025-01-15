@@ -1,4 +1,3 @@
 from app import app
 
-if __name__ == "__main__":
-    app.run()
+# No need to call app.run() in production, Gunicorn handles this.
